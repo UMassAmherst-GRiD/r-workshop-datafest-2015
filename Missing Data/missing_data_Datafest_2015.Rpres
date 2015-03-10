@@ -1,0 +1,206 @@
+Intro to Missing Data Techniques
+========================================================
+author: Kate Aloisio  
+date: 3/10/2015
+
+What is missing data?
+========================================================
+- Any observation (row) without a corresponding response in any variable (column)  
+- A common problem
+- May be due to design or happenstance
+- Ignoring missing data may lead to inefficiency 
+- Ignoring missing data may lead to bias
+- Important to identify possible selection or biasing issues comparing subjects with missing data with complete data subjects
+
+Types of missing data
+========================================================
+
+- Missingness does not depend on observed or unobserved covariates (data fell from the truck)
+
+- Missingness does not depend on unobserved covariates (a subject was hospitalized for high cholesterol)
+
+- Missingness depends on unobserved quantities (a subject missed their appointment because they were too sick to get out of bed)
+
+Missing values in R
+========================================================
+- Denoted NA; Logical constant of length 1 which contains a missing value indicator
+```{r}
+NA
+class(NA)
+NA > 1 
+```
+Missing values in R (cont)
+==========================================================
+- Reserved word in R
+```{r, error=TRUE}
+NA <- 5
+```
+
+Testing for Missing Values
+========================================
+```{r}
+x <- c(1, 2, 9, NA)
+is.na(x)
+```
+What do you think this will return?
+```{r, eval=FALSE}
+y <- c("k", "A", NA, "NA")
+is.na(y)
+```
+
+Testing for Missing Values
+========================================
+```{r}
+y <- c("k", "A", NA, "NA")
+is.na(y)
+```
+
+Recoding Values to Missing
+========================================
+```{r}
+x <- c(1, 2, 9, NA)
+y <- c("k", "A", NA, "NA")
+ds <- as.data.frame(cbind(x, y))
+ds
+```
+
+Recoding Values to Missing (cont)
+========================================
+Let's replace the character "NA" with the symbol NA
+```{r}
+ds$y[ds$y=="NA"] <- NA
+ds
+```
+
+Excluding Missing Values from Analysis
+========================================
+```{r}
+x <- c(1, 2, 9, NA)
+mean(x)
+```
+Oh no!
+
+Excluding Missing Values from Analysis
+========================================
+How do we exclude missing values?
+```{r}
+x[x != NA] # returns all NA
+x[!is.na(x)]
+```
+
+Excluding Missing Values from Analysis
+========================================
+How do we exclude missing values?
+```{r}
+(x_clean <- x[!is.na(x)])
+mean(x_clean) # subset to remove NA
+mean(x, na.rm=TRUE) # use arguments to remove NA
+```
+
+Excluding Missing Values from Analysis
+========================================
+Some functions can handle NA
+```{r}
+summary(x) 
+```
+
+NA options in R
+==========================================
+```{r}
+na.omit(ds)
+na.exclude(ds) # can be different in some prediction and residual functions
+```
+
+NA options (cont.)
+==========================================
+```{r, error=TRUE}
+na.pass(ds) # returns the object unchanged
+na.fail(ds) # returns the object only if it contains no missing values
+```
+
+Advanced Methods
+========================================
+Imputation
+
+> The English verb "to impute" comes from the Latin
+> imputo, which means to reckon, attribute, make account
+> of, charge, ascribe. In the Bible, the word "impute" is a
+> translation of the Hebrew verb hashab, which appears
+> about 120 times in the Old Testament in various
+> meanings (van Buuren, 2012).
+
+Simple imputation
+========================================
+```{r}
+x <- c(1, 2, 5, 10, NA, 6, 1)
+x2 <- x
+is.na(x2)
+x2[is.na(x2)]
+mean(x2, na.rm=TRUE)
+```
+
+Simple imputation
+========================================
+```{r}
+x2[is.na(x2)] <- mean(x2, na.rm = TRUE)
+x2
+```
+
+Random imputation
+========================================
+```{r}
+x3 <- x
+x3[!is.na(x3)]  # values from which we can sample
+x3[is.na(x3)] <- sample(x3[!is.na(x3)], size = sum(is.na(x3)), replace = TRUE)
+x3
+```
+
+Multiple imputation
+========================================
+Three step process
+
+1. Imputation: Generate a set of m ≥ 1 plausible values to "fill-in" the missing values
+2. Analysis: Analyze the m datasets using complete--case methods
+3. Combination: Combine the results from the m analyses
+
+Preserves both mean and variance of variables
+
+NA versus NULL
+========================================
+NULL
+- Represents a null object
+- Returned by expressions and functions whose values are undefined
+- Reserved word
+- Not allowed in a vector
+
+
+Example NA vs NULL
+========================================================
+```{r}
+NA
+class(NA)
+```
+***
+```{r}
+NULL
+class(NULL)
+```
+
+Example NA vs NULL
+========================================================
+```{r}
+v <- c(1, NA, NULL)
+v
+```
+
+Caution using NULL
+========================================
+```{r}
+ds
+ds$x <- NULL
+ds
+```
+
+
+
+
