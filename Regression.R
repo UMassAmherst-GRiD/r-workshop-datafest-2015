@@ -1,9 +1,11 @@
 ## ----setup, echo = FALSE-------------------------------------------------
-library(knitr)
-library(ggplot2)
-library(dplyr)
-opts_chunk$set(echo = FALSE, warning = FALSE)
-#if(!require(cats)) {devtools::install_github("hilaryparker/cats"); library(cats)}
+for(pkg in c("knitr", "ggplot2", "dplyr")) {
+  if(!require(pkg)) {
+    install.packages(pkg)
+    library(pkg)
+  }
+}
+
 
 ## ----linfun--------------------------------------------------------------
 nn = 35
