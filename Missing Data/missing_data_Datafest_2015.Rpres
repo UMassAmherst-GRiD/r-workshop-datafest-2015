@@ -151,19 +151,24 @@ Random imputation
 ```{r}
 x3 <- x
 x3[!is.na(x3)]  # values from which we can sample
-x3[is.na(x3)] <- sample(x3[!is.na(x3)], size = sum(is.na(x3)), replace = TRUE)
+x3[is.na(x3)] <- sample(x3[!is.na(x3)], 
+                 size = sum(is.na(x3)), 
+                 replace = TRUE)
 x3
 ```
 
 Multiple imputation
 ========================================
+Preserves both mean and variance of variables.
+
 Three step process
 
 1. Imputation: Generate a set of m ≥ 1 plausible values to "fill-in" the missing values
 2. Analysis: Analyze the m datasets using complete--case methods
 3. Combination: Combine the results from the m analyses
 
-Preserves both mean and variance of variables
+Check out the package 'mice' for more info.
+
 
 NA versus NULL
 ========================================
@@ -201,6 +206,11 @@ ds$x <- NULL
 ds
 ```
 
-
+References
+=========================================================
+- Quick-R: http://www.statmethods.net/input/missingdata.html
+- UCLA: Statistical Consulting Group.: http://www.ats.ucla.edu/stat/r/faq/missing.htm
+- http://thomasleeper.com/Rcourse/Tutorials/NAhandling.html
+- Flexible Imputation of Missing Data by Stef van Buuren (2012)
 
 
