@@ -57,7 +57,7 @@ NA <- 5
 ```
 
 ```
-Error in NA <- 5: invalid (do_set) left-hand side to assignment
+Error: invalid (do_set) left-hand side to assignment
 ```
 
 Testing for Missing Values
@@ -242,7 +242,7 @@ na.fail(ds) # returns the object only if it contains no missing values
 ```
 
 ```
-Error in na.fail.default(ds): missing values in object
+Error: missing values in object
 ```
 
 Advanced Methods
@@ -282,7 +282,7 @@ mean(x2, na.rm=TRUE)
 ```
 
 ```
-[1] 4.166667
+[1] 4.167
 ```
 
 Simple imputation
@@ -294,7 +294,7 @@ x2
 ```
 
 ```
-[1]  1.000000  2.000000  5.000000 10.000000  4.166667  6.000000  1.000000
+[1]  1.000  2.000  5.000 10.000  4.167  6.000  1.000
 ```
 
 Random imputation
@@ -310,23 +310,28 @@ x3[!is.na(x3)]  # values from which we can sample
 ```
 
 ```r
-x3[is.na(x3)] <- sample(x3[!is.na(x3)], size = sum(is.na(x3)), replace = TRUE)
+x3[is.na(x3)] <- sample(x3[!is.na(x3)], 
+                 size = sum(is.na(x3)), 
+                 replace = TRUE)
 x3
 ```
 
 ```
-[1]  1  2  5 10  2  6  1
+[1]  1  2  5 10  1  6  1
 ```
 
 Multiple imputation
 ========================================
+Preserves both mean and variance of variables.
+
 Three step process
 
 1. Imputation: Generate a set of m = 1 plausible values to "fill-in" the missing values
 2. Analysis: Analyze the m datasets using complete--case methods
 3. Combination: Combine the results from the m analyses
 
-Preserves both mean and variance of variables
+Check out the package 'mice' for more info.
+
 
 NA versus NULL
 ========================================
@@ -406,6 +411,11 @@ ds
 4 <NA>
 ```
 
-
+References
+=========================================================
+- Quick-R: http://www.statmethods.net/input/missingdata.html
+- UCLA: Statistical Consulting Group.: http://www.ats.ucla.edu/stat/r/faq/missing.htm
+- http://thomasleeper.com/Rcourse/Tutorials/NAhandling.html
+- Flexible Imputation of Missing Data by Stef van Buuren (2012)
 
 
