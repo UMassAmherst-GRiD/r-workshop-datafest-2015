@@ -2027,6 +2027,7 @@ iris %>%
 Source: local data frame [3 x 3]
 
      Species total.flowers avg.P.L
+      (fctr)         (int)   (dbl)
 1     setosa            50   1.462
 2 versicolor            50   4.260
 3  virginica            50   5.552
@@ -2048,15 +2049,16 @@ iris %>%
 
 ```
 Source: local data frame [6 x 3]
-Groups: Species
+Groups: Species [2]
 
   Petal.Length    Species cumsum(Petal.Length)
-1          1.4     setosa                  1.4
-2          5.5  virginica                  5.5
-3          4.5 versicolor                  4.5
-4          1.3     setosa                  2.7
-5          4.3 versicolor                  8.8
-6          4.9 versicolor                 13.7
+         (dbl)     (fctr)                (dbl)
+1          4.1 versicolor                  4.1
+2          1.3     setosa                  1.3
+3          4.8 versicolor                  8.9
+4          4.0 versicolor                 12.9
+5          4.0 versicolor                 16.9
+6          1.6     setosa                  2.9
 ```
 
 dplyr - combining datasets
@@ -2074,10 +2076,11 @@ a
 ```
 Source: local data frame [3 x 2]
 
-  x1 x2
-1  A  1
-2  B  2
-3  C  3
+     x1    x2
+  (chr) (dbl)
+1     A     1
+2     B     2
+3     C     3
 ```
 
 dplyr - combining datasets
@@ -2095,10 +2098,11 @@ b
 ```
 Source: local data frame [3 x 2]
 
-  x1    x3
-1  A  TRUE
-2  B FALSE
-3  D  TRUE
+     x1    x3
+  (chr) (lgl)
+1     A  TRUE
+2     B FALSE
+3     D  TRUE
 ```
 
 dplyr - left_join()
@@ -2114,10 +2118,11 @@ left_join(a,b)
 ```
 Source: local data frame [3 x 3]
 
-  x1 x2    x3
-1  A  1  TRUE
-2  B  2 FALSE
-3  C  3    NA
+     x1    x2    x3
+  (chr) (dbl) (lgl)
+1     A     1  TRUE
+2     B     2 FALSE
+3     C     3    NA
 ```
 
 dplyr - right_join()
@@ -2133,10 +2138,11 @@ right_join(a,b)
 ```
 Source: local data frame [3 x 3]
 
-  x1 x2    x3
-1  A  1  TRUE
-2  B  2 FALSE
-3  D NA  TRUE
+     x1    x2    x3
+  (chr) (dbl) (lgl)
+1     A     1  TRUE
+2     B     2 FALSE
+3     D    NA  TRUE
 ```
 
 dplyr - inner_join()
@@ -2152,9 +2158,10 @@ inner_join(a,b)
 ```
 Source: local data frame [2 x 3]
 
-  x1 x2    x3
-1  A  1  TRUE
-2  B  2 FALSE
+     x1    x2    x3
+  (chr) (dbl) (lgl)
+1     A     1  TRUE
+2     B     2 FALSE
 ```
 
 dplyr - full_join()
@@ -2170,11 +2177,12 @@ full_join(a,b)
 ```
 Source: local data frame [4 x 3]
 
-  x1 x2    x3
-1  A  1  TRUE
-2  B  2 FALSE
-3  C  3    NA
-4  D NA  TRUE
+     x1    x2    x3
+  (chr) (dbl) (lgl)
+1     A     1  TRUE
+2     B     2 FALSE
+3     C     3    NA
+4     D    NA  TRUE
 ```
 
 tidyr - gather()
@@ -3041,7 +3049,7 @@ now()
 ```
 
 ```
-[1] "2015-03-10 17:18:46 EDT"
+[1] "2016-07-14 12:47:37 EDT"
 ```
 
 ```r
@@ -3049,7 +3057,7 @@ week(now()) ## week of year
 ```
 
 ```
-[1] 10
+[1] 28
 ```
 
 ```r
@@ -3057,5 +3065,5 @@ yday(now()) ## day of year
 ```
 
 ```
-[1] 69
+[1] 196
 ```

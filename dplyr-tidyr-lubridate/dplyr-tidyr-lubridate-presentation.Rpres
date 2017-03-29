@@ -15,8 +15,10 @@ dplyr - select()
 To view the columns of your choosing, use select(). Can choose by column name:
 
 ```{r}
+install.packages("dplyr")
 library(dplyr)
 data("iris")
+View(iris)
 select(iris,
        Petal.Width,
        Species)
@@ -133,6 +135,8 @@ iris %>%
     select(starts_with("Sepal"), Species) %>%
     filter(Sepal.Length >= 6) %>%
     arrange(desc(Sepal.Width))
+
+arrange(filter(select(iris, starts_with("Sepal"), Species), Sepal.Length >=6), desc(Sepal.Width))
 ```
 
 dplyr - mutate()
@@ -148,7 +152,8 @@ dplyr - mutate()
 ========================================================
 
 ```{r}
-mutate(iris2, Area = Petal.Length*Petal.Width)
+mutate(iris2, Area = Petal.Length*Petal.Width) %>% 
+    arrange(desc(Area))
 ```
 
 dplyr - summarise()/summarize()
@@ -157,6 +162,7 @@ dplyr - summarise()/summarize()
 To create summary statistics of the entire dataset, use summarise():
 
 ```{r}
+dplyr::summarize()
 summarise(iris,
           total.flowers = n(),
           avg.P.Length = mean(Petal.Length),
@@ -194,9 +200,9 @@ dplyr - combining datasets
 Sometimes you have two datasets that you want to merge, such as "a"...
 
 ```{r}
-a <- data_frame(x1 = c("A", "B", "C"),
+a_df <- data_frame(x1 = c("A", "B", "C"),
                 x2 = c(1,2,3))
-a
+a_df
 ```
 
 dplyr - combining datasets
@@ -205,9 +211,9 @@ dplyr - combining datasets
 and "b".
 
 ```{r}
-b <- data_frame(x1 = c("A", "B", "D"),
+b_df <- data_frame(x1 = c("A", "B", "D"),
                 x3 = c(T,F,T))
-b
+b_df
 ```
 
 dplyr - left_join()
@@ -216,7 +222,7 @@ dplyr - left_join()
 left_join() keeps everything in "a" and only matching values in "b".
 
 ```{r}
-left_join(a,b)
+left_join(a_df,b_df)
 ```
 
 dplyr - right_join()
@@ -225,7 +231,7 @@ dplyr - right_join()
 right_join() keeps everything in "b" and only matching values in "a".
 
 ```{r}
-right_join(a,b)
+right_join(a_df,b_df)
 ```
 
 dplyr - inner_join()
@@ -234,7 +240,7 @@ dplyr - inner_join()
 inner_join() keeps everything that matches in "a" and "b".
 
 ```{r}
-inner_join(a,b)
+inner_join(a_df,b_df)
 ```
 
 dplyr - full_join()
@@ -243,7 +249,11 @@ dplyr - full_join()
 full_join() keeps everything in "a" and "b".
 
 ```{r}
-full_join(a,b)
+full_join(a_df,b_df) %>% 
+    arrange(desc(x2)) -> full_join_df
+full_join <- 
+anti_join(a_df,b_df)
+anti_join(b_df,a_df)
 ```
 
 tidyr - gather()
@@ -252,6 +262,7 @@ tidyr - gather()
 If your variables are measured by common units, then it may make sense to make one column for variable name and another for the metric. For this we use gather() from the tidyr package:
 
 ```{r}
+install.packages("tidyr")
 library(tidyr)
 gather(iris, "measure", "cm", 1:4)
 ```
@@ -284,10 +295,12 @@ lubridate
 In order to set the date into a common format (Called "POSIXt"), you merely need to specify the order:
 
 ```{r}
+install.packages("lubridate")
 library(lubridate)
-ymd("2015-03-10")
+now_a_date <- ymd("2015-03-10")
 mdy("3/10/15")
 mdy("March 10th, 2015")
+
 ```
 
 lubridate
